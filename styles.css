@@ -68,88 +68,99 @@ body {
     margin-right: 10px;
     font-size: 1.8rem;
 }
-
-/* Update the flashcards container to use masonry layout */
+/* Update the flashcards container */
 .flashcards-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
-    align-items: start; /* This makes cards align at the top */
+    align-items: start;
 }
 
-/* Remove fixed height from flashcard */
+/* Make cards fully flexible */
 .flashcard {
     perspective: 1000px;
     cursor: pointer;
-    height: auto; /* Changed from fixed height */
+    height: auto;
+    min-height: 100px; /* Minimum height */
 }
 
-/* Make flashcard inner height fit content */
 .flashcard-inner {
     position: relative;
     width: 100%;
     height: auto;
-    min-height: 120px; /* Minimum height */
     transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     transform-style: preserve-3d;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
-    display: flex; /* Added for better content fitting */
+    display: flex;
 }
 
-/* Adjust front and back to fit content */
+/* Make both sides fully visible */
 .flashcard-front,
 .flashcard-back {
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: auto;
+    min-height: 100%;
     backface-visibility: hidden;
     padding: 1.5rem;
     background: var(--card-bg);
     border-radius: var(--border-radius);
-    text-align: center;
-    word-wrap: break-word;
-    overflow: hidden; /* Changed from auto to prevent scrollbars */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flashcard-back {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: white;
+    transform: rotateY(180deg);
+}
+
+/* Content container adjustments */
+.flashcard-content {
+    width: 100%;
+    height: auto;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-/* Adjust content container */
-.flashcard-content {
-    width: 100%;
-    padding: 1rem;
-    max-height: 100%;
-    overflow: hidden;
-}
-
-/* Better text sizing */
+/* Text styling */
 .flashcard-term {
     font-weight: 600;
-    font-size: clamp(1rem, 1.5vw, 1.3rem); /* Responsive font size */
-    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
     color: var(--primary-color);
     word-break: break-word;
 }
 
 .flashcard-definition {
-    font-size: clamp(0.9rem, 1.2vw, 1rem); /* Responsive font size */
+    font-size: 1rem;
     line-height: 1.6;
     word-break: break-word;
+    white-space: pre-line; /* Preserve line breaks */
 }
 
-/* Add a subtle scale effect on hover */
-.flashcard:hover .flashcard-inner {
-    transform: scale(1.02);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
-}
-
-/* Adjust hint text */
+/* Hint text styling */
 .hint-text {
     font-size: 0.8rem;
     color: var(--text-light);
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     opacity: 0.7;
+    font-style: italic;
+}
+
+/* Animation improvements */
+.flashcard:hover .flashcard-inner {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Better flip animation */
+.flashcard.flipped .flashcard-inner {
+    transform: rotateY(180deg) translateY(-5px);
 }
 
 /* Responsive adjustments */
@@ -159,11 +170,11 @@ body {
     }
     
     .flashcard-term {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
     }
     
     .flashcard-definition {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
 }
 .stats-card {
